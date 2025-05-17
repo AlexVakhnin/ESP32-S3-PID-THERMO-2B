@@ -3,8 +3,8 @@
 #define PWM_PERIOD 1000  //период PWM (общий для 2-х комфорок)
 #define IND_PIN  33 //порт для индикации включения реле
 #define RELAY_PIN  34 //порт управления реле
-#define IND_PIN_B2  33
-#define RELAY_PIN_B2  34
+#define IND_PIN_B2  33 // !!!
+#define RELAY_PIN_B2  34 // !!!
 
 extern unsigned long time_now;
 extern int senserror; //счетчик ошибок термопары
