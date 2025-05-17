@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Net Setup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+
+  <div class="card-grid">
+      <div class="card">  
+        <p class="sys-inf">
+            <span>Sys: </span>
+            <span id="rssi">%RSSI%</span>
+            <span id="freemem">%freemem%</span>
+            <span id="iday">0</span>
+            <span id="ihour">0</span>:<span id="imin">0</span>.<span id="isec">0</span>
+        </p>
+		<p>
+			<a href="/logout">
+                <img class="logout-picture" src="logout.png" alt="Logout-picture" style="border-radius:4px;" fetchpriority="high">
+            </a> <br>
+        </p>
+
+        <p>
+			<img class="network-picture" src="network.png" alt="Network-picture" style="border-radius:5px;" fetchpriority="high"> <br>
+            <label for="ssid1">SSID1</label>
+            <input type="text" id ="ssid1" name="ssid1" value="%ssid1%"><br>
+            <label for="pass1">PASS1</label>
+            <input type="text" id ="pass1" name="pass1" value="%pass1%"><br>
+                
+            <label for="ssid2">SSID2</label>
+            <input type="text" id ="ssid2" name="ssid2" value="%ssid2%"><br>
+            <label for="pass2">PASS2</label>
+            <input type="text" id ="pass2" name="pass2" value="%pass2%"><br>
+			
+			<button type="button" class="wifiman" onclick="post_form()">Save</button>
+			<button type="button" class="wifiman" onclick="post_reset()">Reset</button>
+        </p>        
+                
+        <p style="margin-block-end: 40px;">
+                <a href="/update"><img src="elegantota.png" alt="ota-picture" width="180" 
+                height="40"></a>
+        </p>
+        
+      </div>
+  </div>
+
+</body>
+
+<script>
+
+
+function post_form(){
+
+let postObj = { 
+    ssid1: document.getElementById('ssid1').value, 
+    pass1: document.getElementById('pass1').value,
+    ssid2: document.getElementById('ssid2').value, 
+    pass2: document.getElementById('pass2').value
+}
+let post = JSON.stringify(postObj)
+
+fetch("/posts", {
+    method: 'post',
+    body: post,
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    }
+})
+// (C) RETURN SERVER RESPONSE AS TEXT
+.then((res) => {
+   if (res.status != 200) { throw new Error("Bad Server Response"); }
+   return res.text();
+})
+// (D) SERVER RESPONSE
+.then((res) => {
+    console.log(res);
+	alert(res);
+})
+// (E) HANDLE ERRORS - OPTIONAL
+.catch((error) => {
+    console.log(error)
+});
+// (F) PREVENT FORM SUBMIT
+return false;
+}
+
+function post_reset(){
+
+let postObj = { 
+    reset: 'yes'  
+}
+let post = JSON.stringify(postObj)
+
+fetch("/posts", {
+    method: 'post',
+    body: post,
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    }
+})
+// (C) RETURN SERVER RESPONSE AS TEXT
+.then((res) => {
+   if (res.status != 200) { throw new Error("Bad Server Response"); }
+   return res.text();
+})
+// (D) SERVER RESPONSE
+.then((res) => {
+    console.log(res);
+	  alert(res);
+})
+// (E) HANDLE ERRORS - OPTIONAL
+.catch((error) => {
+    console.log(error)
+});
+// (F) PREVENT FORM SUBMIT
+return false;
+}
+
+
+function reserved(){
+  console.log("Reserved function..")
+}
+
+
+setInterval(function ( ) {  /*период 2 сек.*/
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+	  //if (passed_change > 0 ) {passed_change -= 1}
+    if (this.readyState == 4 && this.status == 200) {
+		  var myObj = JSON.parse(this.responseText);
+		  document.getElementById("rssi").innerHTML = myObj.rssi;
+		  document.getElementById("freemem").innerHTML = myObj.freemem;
+		  document.getElementById("iday").innerHTML = myObj.iday;
+		  document.getElementById("ihour").innerHTML = myObj.ihour;  //.padStart(2,"0");
+		  document.getElementById("imin").innerHTML =  String(myObj.imin).padStart(2,"0");
+		  document.getElementById("isec").innerHTML =  String(myObj.isec).padStart(2,"0");
+      }
+    };
+    xhttp.open("GET", "/jsonstate", true);
+    xhttp.send();
+  }, 1900 ) ;
+  
+
+</script>
+</html>

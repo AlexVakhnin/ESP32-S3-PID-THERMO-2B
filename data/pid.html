@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+  <title>PID Tuning</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="Chart.min.js"></script>
+</head>
+
+<body>
+
+
+<!--<div class="card-grid">-->
+  <div class="card">
+	
+        <canvas id="mycanvas" height="600px"></canvas>
+
+        <p class="pid-inf">
+            <span>27m/15s </span>
+            <span>PID: </span>
+            <span id="targ">0</span>
+            <span id="curr">0</span>
+            <span id="impact">0</span>
+        </p>
+
+  </div>
+<!--</div>-->
+
+</body>
+
+<script>
+
+let dataCO2 = new Array(108); for (var i=0;i<=107;i++){dataCO2[i]=0}//current temperature
+let dataCO3 = new Array(108); for (var i=0;i<=107;i++){dataCO3[i]=0}//target temperature
+let dataCO4 = new Array(108); for (var i=0;i<=107;i++){dataCO4[i]=0}//PID result
+let xValues = new Array(108); for (var i=0;i<=107;i++){xValues[i]="0.0"}//метки шкалы X
+
+//const xValues =  [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36, 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36, 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36];
+
+    //действие при загрузке страницы
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {	  
+      if (this.readyState == 4 && this.status == 200) {
+		    var myObj = JSON.parse(this.responseText);
+
+            var targ = myObj[0]; //цель
+            var curr = myObj[1]/100; //текущее знач.
+            var impact = myObj[2]; //воздействие
+            document.getElementById("targ").innerHTML = targ;
+            document.getElementById("curr").innerHTML = curr.toFixed(2);
+            document.getElementById("impact").innerHTML = impact;
+      }
+    };
+    xhttp.open("GET", "/jsond0", false);  //synchronous request !!!
+    xhttp.send();
+
+//создаем обьект - график
+var ctx_live = document.getElementById("mycanvas");
+var myChart = new Chart(ctx_live, {
+  type: 'line',
+  data: {
+    labels: xValues,    //метки шкалы X (передается только ссылка xValues)
+    datasets: [
+        { 
+        data: dataCO2,  //ссылка на массив dataCO2
+        borderColor: "gray",
+        fill: false, //заливка
+        cubicInterpolationMode: 'monotone' //сглаживание углов
+        },
+        { 
+        data: dataCO3,  //ссылка на массив dataCO3
+        borderColor: "blue",
+        fill: false, //заливка
+        cubicInterpolationMode: 'monotone' //сглаживание углов
+        },
+        { 
+        data: dataCO4,  //ссылка на массив dataCO4
+        borderColor: "orange",
+        fill: false, //заливка
+        cubicInterpolationMode: 'monotone' //сглаживание углов
+        }
+    ]
+  },
+  options: {
+    scales: {
+        y: {
+            min: 0,
+            max: 400,
+            ticks: {
+              stepSize: 20
+            }           
+        }
+    },
+	plugins:  {
+		//animation: false,
+		legend: {display: false,}
+    }    	
+  }
+  
+});
+
+
+
+//обновляем все данные периодически
+    setInterval(function ( ) {  /*период 5 сек.*/
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {	  
+      if (this.readyState == 4 && this.status == 200) {
+		    var myObj = JSON.parse(this.responseText);		
+            var targ = myObj[0]; //цель
+            var curr = myObj[1]/100; //текущее знач.
+            var impact = myObj[2]; //воздействие
+            document.getElementById("targ").innerHTML = targ;
+            document.getElementById("curr").innerHTML = curr.toFixed(2);
+            document.getElementById("impact").innerHTML = (impact/10).toFixed(2);
+
+            for (var i=0;i<107;i++){
+               myChart.data.datasets[0].data[i] = myChart.data.datasets[0].data[i+1]; /*сдвиг*/
+               myChart.data.datasets[1].data[i] = myChart.data.datasets[1].data[i+1]; /*сдвиг*/
+               myChart.data.datasets[2].data[i] = myChart.data.datasets[2].data[i+1]; /*сдвиг*/
+               myChart.data.labels[i] = myChart.data.labels[i+1]; /*сдвиг*/
+		    }
+            myChart.data.datasets[0].data[107] = targ;
+            myChart.data.datasets[1].data[107] = curr;
+            myChart.data.datasets[2].data[107] = impact/10;
+            let now = new Date();let s = now.getSeconds();let m = now.getMinutes();
+            myChart.data.labels[107] = m.toString().padStart(2, "0")+"."+s.toString().padStart(2, "0");
+            
+		    myChart.update(); //обновить картинку графика
+
+      }
+    };
+    xhttp.open("GET", "/jsond0", true);
+    xhttp.send();
+  }, 15000 ) ;
+  
+  
+</script>
+
+
+</html>

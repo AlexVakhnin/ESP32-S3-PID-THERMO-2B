@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Login Thermo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+  body{
+	background-color:powderblue;
+	margin: 0px auto;
+	text-align: center;
+	font-family: Arial, Helvetica, sans-serif;
+	display: block; 
+	user-select:none;
+	}
+.card-grid {  /*нужен для центровки внутренней панели*/
+  max-width: 400px; /*ширина*/
+  margin: 0 auto; 
+  display: grid; 
+  grid-gap: 2rem; 
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-block-start: 10%;	/*верхний отступ*/
+}
+.card {       /*это внутренняя панель, на ней все элементы*/
+  position:relative;
+  /*height:560px; */ /*высота*/
+  margin-block-start: 3%;
+  margin-left: 3%;
+  margin-right:3%;
+  border-radius:3px;
+  /*border: 1px solid #333;*/
+  background:#e2eaec;
+  box-shadow: 2px 2px 12px 1px rgba(140,140,140,.5);
+}
+input {
+  padding: 8px 20px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 18px/*1.2rem*/;
+  width: 70%;
+  margin: 10px;
+}
+input:focus {
+  outline: none;
+  /*background-color:#ffffcc;*/ 
+  border-width:2px;
+  border-color:#a9aaa3;
+}
+button {
+  border: none;
+  color: #FEFCFB; /*цвет шрифта*/
+  padding: 10px 10px;
+  text-align: center;
+  font-size: 16px;
+  width: 70%;
+  border-radius: 4px;
+  margin: 10px;
+  margin-bottom: 20px;
+  background-color: #4CAF50;
+} 
+</style>
+</head>
+
+<body>
+  <div class="card-grid">
+      <div class="card"> 	  
+		<img class="login-picture" src="signin.png" alt="Login-picture" style="padding-top: 30px;" fetchpriority="high" /> 
+		
+		<form action="/login" method="POST" class="login-form" style="padding-top: 10px;">
+            <input type="text" id ="username" name="username" placeholder="username">
+            <input type="password" id ="password" name="password" placeholder="password">
+            <button type="submit" name="SUBMIT" value="Submit" >LOGIN</button>
+        </form>
+		
+         <div style="margin: 20px; color: red;font-size: small;" id="message"></div>        
+      </div>
+  </div>
+</body>
+
+<script>
+    function getURLParameter(sParam)
+    {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++)
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam)
+            {
+                return sParameterName[1];
+            }
+        }
+    }
+    if (getURLParameter("msg")) {
+        document.getElementById("message").innerText = decodeURI(getURLParameter("msg"));
+    }
+</script>
+</html>
