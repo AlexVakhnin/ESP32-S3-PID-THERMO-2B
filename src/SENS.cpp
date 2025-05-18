@@ -12,7 +12,7 @@ extern unsigned long time_now;
 #define MAXDO   16  //MISO - data from slave  <--  (pull-up resistor 1-4.7 kom !!!)
 #define MAXCLK  14  //SC - serial clock to slave -->
 #define MAXCS   15  //SS - serial select to slave -->
-#define MAXCS_B2   15  // !!!
+#define MAXCS_B2   13  // !!!
 
 // initialize the Thermocouple
 //Adafruit_MAX31855 thermocouple(MAXCLK, MAXCS, MAXDO); //это программный SPI

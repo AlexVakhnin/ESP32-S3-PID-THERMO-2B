@@ -4,9 +4,9 @@
 #define DT_PIN 7
 #define SW_PIN 8
 
-#define CLK_PIN_B2 6
-#define DT_PIN_B2 7
-#define SW_PIN_B2 8
+#define CLK_PIN_B2 5
+#define DT_PIN_B2 4
+#define SW_PIN_B2 2
 
 extern volatile bool tempfail; //флаг для блокировки реле по резкому падению температуры
 extern bool overheat; //флаг для блокировки реле по перегреву

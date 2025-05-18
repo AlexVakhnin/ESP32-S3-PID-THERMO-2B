@@ -8,23 +8,32 @@
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 32 // OLED display height, in pixels
 
-extern double gOutputPwr; //результат вычислений PID
+//extern double gOutputPwr; //результат вычислений PID
 extern double gTargetTemp; //целевая температура
 extern double currentTemp; //текущая температура по датчику
-extern bool overShootMode; //далеко от цели..
+extern double gTargetTemp_b2;
+extern double currentTemp_b2;
+//extern bool overShootMode; //далеко от цели..
 extern int senserror;
 extern bool overheat;
 extern volatile bool tempfail;
+extern int senserror_b2;
+extern bool overheat_b2;
+extern volatile bool tempfail_b2;
 extern int kind_error;
+extern int kind_error_b2;
 
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
 #define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET); //тут передаем только ссылку I2C
 
+String ds1 = ""; //дисплей-строка 1
 String ds1_1 = ""; //для gTargetTem
 String ds1_2 = ""; //для currentTemp
-String ds1 = ""; //дисплей-строка 1
+
 String ds2 = ""; //дисплей-строка 2
+String ds2_1 = ""; //для gTargetTem_B2
+String ds2_2 = ""; //для currentTemp_B2
 
 //char buffer[50]; //для sprintf()
 
@@ -34,13 +43,18 @@ void disp_show_temp(){
 
   display.setCursor(0,0); //координаты 1-й строки 1-го числа
   display.print(ds1_1);
-  display.setCursor(64-8,0); //координаты 1-й строки 2-го числа
+  display.setCursor(56,0); //координаты 1-й строки 2-го числа
   display.print(ds1_2);
 
-  display.setCursor(0,18); //координаты 2-й строки
-  display.print(ds2);
-  display.display();//show
+  display.setCursor(0,18); //координаты 2-й строки 1-го числа
+  display.print(ds2_1);
+  display.setCursor(56,18); //координаты 2-й строки 2-го числа
+  display.print(ds2_2);
 
+  //display.setCursor(0,18); //координаты 2-й строки
+  //display.print(ds2);
+
+  display.display();//show
 }
 // Обновление состояния дисплея
 void disp_show(){
@@ -56,15 +70,17 @@ void disp_show(){
 //обновить дисплей T=200ms
 void disp_refrash(){
   double dTemp = kind_error;
+  double dTemp_b2 = kind_error_b2;
   if (senserror==0) dTemp=currentTemp;
+  if (senserror_b2==0) dTemp_b2=currentTemp_b2;
 
   //ds1=String((int)gTargetTemp)+" "+String(dTemp);
   ds1_1 = String((int)gTargetTemp); ds1_2 = String(dTemp);
+  ds2_1 = String((int)gTargetTemp_b2); ds2_2 = String(dTemp_b2);
 
-
-  if (overheat) ds2="OVERHEAT";
-  else if (tempfail) ds2="TEMPFAIL";
-  else ds2=String(overShootMode)+"  "+String(gOutputPwr/10)+"%";
+  //if (overheat) ds1="OVERHEAT";
+  //else if (tempfail) ds1="TEMPFAIL";
+  //else ds2=String(overShootMode)+"  "+String(gOutputPwr/10)+"%";
   disp_show_temp(); //результат на дисплей
 }
 
