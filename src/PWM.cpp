@@ -6,6 +6,8 @@
 #define IND_PIN_B2  35 // !!!
 #define RELAY_PIN_B2  36 // !!!
 
+#define HEAT_MAX 400
+
 extern unsigned long time_now;
 extern int senserror; //счетчик ошибок термопары
 extern double currentTemp;
@@ -44,7 +46,7 @@ void pwm_setup() {
 void _turnHeatElementOnOff(bool state) {
 
     if(senserror!=0) state = 0; //блокировка при аварии датчика !!!
-    if(rawTemp>=400) overheat=true;//блокировка по высокой температуре !!!
+    if(rawTemp>=HEAT_MAX) overheat=true;//блокировка по высокой температуре !!!
     if(overheat) state = 0;
     if(tempfail) state = 0;
 
@@ -56,7 +58,7 @@ void _turnHeatElementOnOff(bool state) {
 void _turnHeatElementOnOff_b2(bool state) {
 
     if(senserror_b2!=0) state = 0; //блокировка при аварии датчика !!!
-    if(rawTemp_b2>=400) overheat_b2=true;//блокировка по высокой температуре !!!
+    if(rawTemp_b2>=HEAT_MAX) overheat_b2=true;//блокировка по высокой температуре !!!
     if(overheat_b2) state = 0;
     if(tempfail_b2) state = 0;
 

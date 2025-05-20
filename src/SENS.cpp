@@ -100,7 +100,8 @@ void updateCurrentTemperature(){
 
       filtTemp += (c - filtTemp) * 0.2; //фильтр (IIR)
       currentTemp = (round(filtTemp*100))/100;
-      if (senserror>=2) senserror=1;
+
+      if (senserror>=2) senserror=1;  //для задержки номера ошибки на дисплее
       if (senserror==1) {senserror=0;kind_error = -4;}
 
     } else {
@@ -117,7 +118,8 @@ void updateCurrentTemperature(){
 
       filtTemp_b2 += (c - filtTemp_b2) * 0.2; //фильтр (IIR)
       currentTemp_b2 = (round(filtTemp_b2*100))/100;
-      if (senserror_b2>=2) senserror_b2=1;
+
+      if (senserror_b2>=2) senserror_b2=1;  //для задержки номера ошибки на дисплее
       if (senserror_b2==1) {senserror_b2=0;kind_error_b2 = -4;}
 
     } else {

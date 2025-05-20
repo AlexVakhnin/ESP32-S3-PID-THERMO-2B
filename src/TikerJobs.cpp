@@ -3,8 +3,12 @@
 extern double currentTemp; //температура термопары фильтрованная
 extern double rawTemp; //температура без фильтра 
 extern volatile bool tempfail; //флаг для блокировки реле
+extern double currentTemp_b2;
+extern double rawTemp_b2;
+extern volatile bool tempfail_b2;
 
 double oldrawTemp = 0; //тут запоминаем с периодом 5 сек.
+double oldrawTemp_b2 = 0;
 
 unsigned long sUpTime;
 unsigned long ihour;
@@ -49,6 +53,7 @@ void get_uptime(){
 
     //устанавливаем блокировку по резкому обвалу температуры
     if (oldrawTemp>rawTemp and abs(oldrawTemp-rawTemp)>10){tempfail = true;}
+    if (oldrawTemp_b2>rawTemp_b2 and abs(oldrawTemp_b2-rawTemp_b2)>10){tempfail_b2 = true;}
     oldrawTemp = rawTemp;
-
+    oldrawTemp_b2 = rawTemp_b2;
 }
