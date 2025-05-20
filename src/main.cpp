@@ -14,20 +14,22 @@ extern void pwm_handle();
 extern void pid_setup();
 extern void pid_set_tun();
 extern bool pid_compute();
+extern bool pid_compute_b2();
 extern void updateCurrentTemperature();
 extern void setHeatPowerPercentage(float power);
+extern void setHeatPowerPercentage_b2(float power);
 extern void encoder_setup();
 extern void encoder_handle(); //кнопка энкодера
 extern int encoder_value();
+extern int encoder_value_b2();
 extern void setupSensor();
 extern void apn_stop();
 extern String ds1;
 extern String ds2;
 extern double gOutputPwr; //результат вычислений PID
+extern double gOutputPwr_b2;
 extern double gTargetTemp; //целевая температура
-extern double currentTemp; //текущая температура по датчику
-extern bool overShootMode; //далеко от цели..
-extern int senserror; //счетчик ошибок термопары
+extern double gTargetTemp_b2;
 
 Ticker hTicker; //Для UpTime, графиков, защиты..
 
@@ -70,6 +72,7 @@ void loop() {
 
   if(abs(time_now-time_last)>=RFR_INTERVAL or time_last > time_now) { //обработка задач для T=200 мс.
       gTargetTemp = encoder_value(); //данные с энкодера
+      gTargetTemp_b2 = encoder_value_b2(); //данные с энкодера 2
       disp_refrash();
       pid_set_tun();
       time_last=time_now;
@@ -77,6 +80,9 @@ void loop() {
 
   if (pid_compute()){ //вычисляем..если результат PID готов.. 
       setHeatPowerPercentage(gOutputPwr);  //задаем значение для PWM (0-1000)
+  }
+  if (pid_compute_b2()){ //вычисляем..если результат PID готов.. 
+      setHeatPowerPercentage_b2(gOutputPwr_b2);  //задаем значение для PWM (0-1000)
   }
 
   pwm_handle(); //обработчик PWM T=1000 
