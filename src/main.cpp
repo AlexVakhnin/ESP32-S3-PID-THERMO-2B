@@ -24,6 +24,8 @@ extern int encoder_value();
 extern int encoder_value_b2();
 extern void setupSensor();
 extern void apn_stop();
+extern void timer_setup();
+extern void timer_ind_blink(void);
 extern String ds1;
 extern String ds2;
 extern double gOutputPwr; //результат вычислений PID
@@ -57,6 +59,7 @@ void setup() {
   pid_setup();
   encoder_setup();
   setupSensor();
+  timer_setup();
 
   delay(100);
   Serial.printf("Free heap after create objects:\t%d \r\n", ESP.getFreeHeap());
@@ -92,6 +95,7 @@ void loop() {
   }
   if (pid_compute_b2()){ //вычисляем..если результат PID готов.. 
       setHeatPowerPercentage_b2(gOutputPwr_b2);  //задаем значение для PWM (0-1000)
+      timer_ind_blink();//тут частота 0.5 сек. - используем ее..
   }
   /**/
 

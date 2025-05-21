@@ -14,10 +14,10 @@ extern double currentTemp; //текущая температура по датч
 extern double gTargetTemp_b2;
 extern double currentTemp_b2;
 
-extern double gOutputPwr;       //for debug
-extern double gOutputPwr_b2;    //for debug
-extern float heatcycles;        //for debug
-extern float heatcycles_b2;     //for debug
+//extern double gOutputPwr;       //for debug
+//extern double gOutputPwr_b2;    //for debug
+//extern float heatcycles;        //for debug
+//extern float heatcycles_b2;     //for debug
 //extern bool overShootMode; //далеко от цели..
 extern int senserror;
 extern bool overheat;
@@ -102,28 +102,15 @@ void disp_refrash(){
 
 //SSD1306 OLED Init
 void disp_setup(){
-  //delay(1000);
   //ReDefine I2C Pins
   Wire.begin(I2C_DATA, I2C_CLOCK); //создается интерф I2C c новыми выводами
   // Setup display SSD1306
-  //delay(1000);
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
 
-  //display.setRotation(3);
   display.display(); //show LOGO
   delay(1000);
   display.setTextColor(WHITE);
   display.setTextSize(2);
   display.clearDisplay();
-  //display.setCursor(0, 0);
-  //display.setTextSize(8);  
-  //display.print("1");
-
-  //display.drawRect(0,43,32,83,WHITE);
-  //display.drawRect(0,0,32,32,WHITE);
   display.display();//show
-  //delay(1000);
-  //disp_1();
-  //disp_2();
-
 }

@@ -6,6 +6,7 @@ extern volatile bool tempfail; //флаг для блокировки реле
 extern double currentTemp_b2;
 extern double rawTemp_b2;
 extern volatile bool tempfail_b2;
+//extern void timer_ind_blink(void);
 
 double oldrawTemp = 0; //тут запоминаем с периодом 5 сек.
 double oldrawTemp_b2 = 0;
