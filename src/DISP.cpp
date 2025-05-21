@@ -13,6 +13,11 @@ extern double gTargetTemp; //целевая температура
 extern double currentTemp; //текущая температура по датчику
 extern double gTargetTemp_b2;
 extern double currentTemp_b2;
+
+extern double gOutputPwr;       //for debug
+extern double gOutputPwr_b2;    //for debug
+extern float heatcycles;        //for debug
+extern float heatcycles_b2;     //for debug
 //extern bool overShootMode; //далеко от цели..
 extern int senserror;
 extern bool overheat;
@@ -49,6 +54,7 @@ void disp_show_temp(){
     display.print(ds1_1);
     display.setCursor(56,0); //координаты 1-й строки 2-го числа
     display.print(ds1_2);
+    //display.print(String(heatcycles)); // for debug
   }
 
   if(tempfail_b2 or overheat_b2) {
@@ -59,6 +65,7 @@ void disp_show_temp(){
     display.print(ds2_1);
     display.setCursor(56,18); //координаты 2-й строки 2-го числа
     display.print(ds2_2);
+    //display.print(String(heatcycles_b2)); // for debug
   }
 
   display.display();//show

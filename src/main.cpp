@@ -65,6 +65,9 @@ void setup() {
   time_last=time_now;
 }
 
+//float mapvalue  = 0;    //DEBUG
+//float mapvalue_b2  = 0; //DEBUG
+
 void loop() {
 
   time_now=millis();
@@ -73,17 +76,24 @@ void loop() {
   if(abs(time_now-time_last)>=RFR_INTERVAL or time_last > time_now) { //обработка задач для T=200 мс.
       gTargetTemp = encoder_value(); //данные с энкодера
       gTargetTemp_b2 = encoder_value_b2(); //данные с энкодера 2
+
+      //mapvalue = map(gTargetTemp,100,300,0,1000); setHeatPowerPercentage(mapvalue);             //DEBUG
+      //mapvalue_b2 = map(gTargetTemp_b2,100,300,0,1000); setHeatPowerPercentage_b2(mapvalue_b2); //DEBUG
+
       disp_refrash();
       pid_set_tun();
       time_last=time_now;
   }
 
+
+  /**/
   if (pid_compute()){ //вычисляем..если результат PID готов.. 
       setHeatPowerPercentage(gOutputPwr);  //задаем значение для PWM (0-1000)
   }
   if (pid_compute_b2()){ //вычисляем..если результат PID готов.. 
       setHeatPowerPercentage_b2(gOutputPwr_b2);  //задаем значение для PWM (0-1000)
   }
+  /**/
 
   pwm_handle(); //обработчик PWM T=1000 
   encoder_handle(); //обработчик кнопки энкодера

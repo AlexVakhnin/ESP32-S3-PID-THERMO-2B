@@ -1,10 +1,10 @@
 #include <Arduino.h>
 
 #define PWM_PERIOD 1000  //период PWM (общий для 2-х комфорок)
-#define IND_PIN  33 //порт для индикации включения реле
+#define IND_PIN  11 //порт для индикации включения реле
 #define RELAY_PIN  34 //порт управления реле
-#define IND_PIN_B2  35 // !!!
-#define RELAY_PIN_B2  36 // !!!
+#define IND_PIN_B2  40
+#define RELAY_PIN_B2  36
 
 #define HEAT_MAX 400
 
