@@ -200,7 +200,7 @@ server.on("/posts", HTTP_POST, [](AsyncWebServerRequest *request){
           doc.add( gTargetTemp ); //цель
           doc.add( currentTemp*100 ); //текущее значение
           doc.add( gOutputPwr ); //воздействие
-          doc.add( overShootMode*10 ); //агрессивный
+          doc.add( (int)overShootMode ); //агрессивный
       serializeJson(doc, *response);
       request->send(response);    
     });
@@ -212,7 +212,7 @@ server.on("/posts", HTTP_POST, [](AsyncWebServerRequest *request){
           doc.add( gTargetTemp_b2 ); //цель
           doc.add( currentTemp_b2*100 ); //текущее значение
           doc.add( gOutputPwr_b2 ); //воздействие
-          doc.add( overShootMode_b2*10 ); //агрессивный
+          doc.add( (int)overShootMode_b2 ); //агрессивный
       serializeJson(doc, *response);
       request->send(response);    
     });

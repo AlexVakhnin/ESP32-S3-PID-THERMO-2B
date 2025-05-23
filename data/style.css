@@ -26,10 +26,10 @@ body{
 }
 .card {       /*это основная панель, на ней все элементы*/
   position:relative;
-  height:600px;  /*высота родителя*/
-  margin-block-start: 3%;
-  margin-left: 3%;
-  margin-right:3%;
+  height:580px;  /*высота родителя*/
+  margin-block-start: 1%;
+  margin-left: 1%;
+  margin-right:1%;
   border-radius:3px;
   /*border: 1px solid #333;*/
   background:#e2eaec;
@@ -37,7 +37,7 @@ body{
 }
 canvas {  /*основа для графика*/
   position:relative;
-  height:600px;  /*высота потомка*/
+  height:580px;  /*высота потомка*/
   margin-left: auto;
   margin-right: auto;
 
@@ -64,10 +64,14 @@ background-color: #f2f3f3;
 .pid-inf {  /*под графиком, нижняя строка*/
 	margin-block-start: 5px;
 	margin-block-end: 5px;	
-	font-size: 18px;
-	font-weight: 700;
+	font-size: 16px;
+	font-weight: 600;
 }
 #freemem {  /*желтая подсветка*/
+  /*border: red 2px solid;*/
+  background-color: #f7ec88;
+}
+#curr {  /*желтая подсветка*/
   /*border: red 2px solid;*/
   background-color: #f7ec88;
 }

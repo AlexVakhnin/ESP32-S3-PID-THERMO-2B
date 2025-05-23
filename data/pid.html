@@ -14,7 +14,7 @@
 <!--<div class="card-grid">-->
   <div class="card">
 	
-        <canvas id="mycanvas" height="600px"></canvas>
+        <canvas id="mycanvas" height="580px"></canvas>
 
         <p class="pid-inf">
             <span>27m/15s </span>
@@ -22,6 +22,7 @@
             <span id="targ">0</span>
             <span id="curr">0</span>
             <span id="impact">0</span>
+            <span id="osmode">0</span>
         </p>
 
   </div>
@@ -45,9 +46,11 @@ let xValues = new Array(108); for (var i=0;i<=107;i++){xValues[i]="0.0"}//мет
             var targ = myObj[0]; //цель
             var curr = myObj[1]/100; //текущее знач.
             var impact = myObj[2]; //воздействие
+            var osmode = myObj[3]; //big error
             document.getElementById("targ").innerHTML = targ;
             document.getElementById("curr").innerHTML = curr.toFixed(2);
             document.getElementById("impact").innerHTML = impact;
+            document.getElementById("osmode").innerHTML = "["+osmode+"]";
       }
     };
     xhttp.open("GET", "/jsond0", false);  //synchronous request !!!
@@ -109,9 +112,11 @@ var myChart = new Chart(ctx_live, {
             var targ = myObj[0]; //цель
             var curr = myObj[1]/100; //текущее знач.
             var impact = myObj[2]; //воздействие
+            var osmode = myObj[3]; //big error
             document.getElementById("targ").innerHTML = targ;
             document.getElementById("curr").innerHTML = curr.toFixed(2);
             document.getElementById("impact").innerHTML = (impact/10).toFixed(2);
+            document.getElementById("osmode").innerHTML = "["+osmode+"]";
 
             for (var i=0;i<107;i++){
                myChart.data.datasets[0].data[i] = myChart.data.datasets[0].data[i+1]; /*сдвиг*/
