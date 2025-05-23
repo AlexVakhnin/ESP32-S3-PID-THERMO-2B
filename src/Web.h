@@ -17,7 +17,12 @@ extern unsigned long iday;
 extern double gTargetTemp; //целевая температура
 extern double currentTemp; //текущая температура
 extern double gOutputPwr; //процент мощности на нагреватель (0-1000)
-extern volatile unsigned int arrTemp[108];
+extern bool overShootMode; //агрессивный режим
+extern double gTargetTemp_b2;
+extern double currentTemp_b2;
+extern double gOutputPwr_b2;
+extern bool overShootMode_b2;
+//extern volatile unsigned int arrTemp[108];
 
 extern void handleLogin(AsyncWebServerRequest *request);
 extern void handleLogout(AsyncWebServerRequest *request);

@@ -1,9 +1,9 @@
 #include <Arduino.h>
 
-extern double currentTemp; //температура термопары фильтрованная
+//extern double currentTemp; //температура термопары фильтрованная
 extern double rawTemp; //температура без фильтра 
 extern volatile bool tempfail; //флаг для блокировки реле
-extern double currentTemp_b2;
+//extern double currentTemp_b2;
 extern double rawTemp_b2;
 extern volatile bool tempfail_b2;
 //extern void timer_ind_blink(void);
@@ -16,10 +16,10 @@ unsigned long ihour;
 unsigned long imin;
 unsigned long isec;
 unsigned long iday;
-volatile unsigned int arrTemp[108]= {0}; //окно - 27 мин.(15*108/60)
-int counter_30s = 0;
+//volatile unsigned int arrTemp[108]= {0}; //окно - 27 мин.(15*108/60)
+//int counter_30s = 0;
 
-
+/*
 //сдвиг элементов массива влево с добавлением нового значения
 void push_arr( volatile unsigned int arr[], int elem, unsigned int n ){
     for (int i=elem-1;i>0;i--){
@@ -27,20 +27,22 @@ void push_arr( volatile unsigned int arr[], int elem, unsigned int n ){
     }
     arr[0] = n;
 }
-
+*/
 
 //вычислить uptime д/ч/м/с (вызывается с периодом 5 сек)
 void get_uptime(){
 
-    if ( counter_30s > 0 ){counter_30s--;}
+/*
+    if ( counter_30s > 0 ){counter_30s--;} //период = 30 сек.
     else { 
         counter_30s = 5; //6*5=30
 
         //работа с массивом для графика
         int elements = sizeof(arrTemp) / sizeof(arrTemp[0]);//колич. точек X графика
         push_arr( arrTemp, elements, currentTemp*100 );//сдвиг массива arrTemp влево
+
     }
-  
+*/  
 
 
     sUpTime+=5;  //прибавляем 5 сек

@@ -100,11 +100,16 @@ server.on("/posts", HTTP_POST, [](AsyncWebServerRequest *request){
     server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
       request->send(SPIFFS, "/index.html", String(), false, processor);
     });
+/*
     server.on("/graph.html", HTTP_GET, [](AsyncWebServerRequest *request){
       request->send(SPIFFS, "/graph.html", String(), false, processor);
     });
+*/
     server.on("/pid.html", HTTP_GET, [](AsyncWebServerRequest *request){
       request->send(SPIFFS, "/pid.html", String(), false, processor);
+    });
+    server.on("/pid_b2.html", HTTP_GET, [](AsyncWebServerRequest *request){
+      request->send(SPIFFS, "/pid_b2.html", String(), false, processor);
     });
   
 
@@ -174,9 +179,9 @@ server.on("/posts", HTTP_POST, [](AsyncWebServerRequest *request){
     }
   });
 
-    // график №1
+/*
+    // график №1 (массив 108 элементов)
     server.on("/jsong0", HTTP_GET, [](AsyncWebServerRequest *request){
-      //switch_flag = 0;
       AsyncResponseStream *response = request->beginResponseStream("application/json");    
       const int capacity = JSON_OBJECT_SIZE(108);//Количество живых параметров = 108
       StaticJsonDocument<capacity> doc;
@@ -186,19 +191,28 @@ server.on("/posts", HTTP_POST, [](AsyncWebServerRequest *request){
       serializeJson(doc, *response);
       request->send(response);    
     });
-
+*/
     // текущие данные для графика №1
     server.on("/jsond0", HTTP_GET, [](AsyncWebServerRequest *request){
-      //switch_flag = 0;
       AsyncResponseStream *response = request->beginResponseStream("application/json");    
-      const int capacity = JSON_OBJECT_SIZE(3);//Количество живых параметров = 108
+      const int capacity = JSON_OBJECT_SIZE(4);//Количество живых параметров = 4
       StaticJsonDocument<capacity> doc;
-          //for (int i = 2; i >= 0; i--) {  //график №1 в JSON
-          //  doc.add( arrTemp[i] ); //simply array !!!
-          //}
           doc.add( gTargetTemp ); //цель
           doc.add( currentTemp*100 ); //текущее значение
           doc.add( gOutputPwr ); //воздействие
+          doc.add( overShootMode*10 ); //агрессивный
+      serializeJson(doc, *response);
+      request->send(response);    
+    });
+    // текущие данные для графика №2
+    server.on("/jsond1", HTTP_GET, [](AsyncWebServerRequest *request){
+      AsyncResponseStream *response = request->beginResponseStream("application/json");    
+      const int capacity = JSON_OBJECT_SIZE(4);//Количество живых параметров = 4
+      StaticJsonDocument<capacity> doc;
+          doc.add( gTargetTemp_b2 ); //цель
+          doc.add( currentTemp_b2*100 ); //текущее значение
+          doc.add( gOutputPwr_b2 ); //воздействие
+          doc.add( overShootMode_b2*10 ); //агрессивный
       serializeJson(doc, *response);
       request->send(response);    
     });
@@ -211,9 +225,6 @@ server.on("/posts", HTTP_POST, [](AsyncWebServerRequest *request){
                     handleNotFound(request);    // выдаем ответ 404 (Not Found) error
                 }                               // иначе зарос обработает handleFileRead()
             });
-
-  //cache-control для файлов..
-  //server.serveStatic("/index.html", SPIFFS, "/index.html").setCacheControl("no-cache");//, "no-cache");
 
   AsyncElegantOTA.begin(&server);    // Start AsyncElegantOTA
   server.begin();  

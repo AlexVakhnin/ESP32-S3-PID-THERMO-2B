@@ -2,7 +2,7 @@
 <html lang="en">
   
 <head>
-  <title>PID Tuning</title>
+  <title>PID_B2 Tuning</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style.css">
   <script src="Chart.min.js"></script>
@@ -18,7 +18,7 @@
 
         <p class="pid-inf">
             <span>27m/15s </span>
-            <span>PID: </span>
+            <span>PID_B2: </span>
             <span id="targ">0</span>
             <span id="curr">0</span>
             <span id="impact">0</span>
@@ -129,7 +129,7 @@ var myChart = new Chart(ctx_live, {
 
       }
     };
-    xhttp.open("GET", "/jsond0", true);
+    xhttp.open("GET", "/jsond1", true);
     xhttp.send();
   }, 15000 ) ;
   
