@@ -26,6 +26,7 @@ extern void setupSensor();
 extern void apn_stop();
 extern void timer_setup();
 extern void timer_ind_blink(void);
+extern void timer_handle(void);
 extern String ds1;
 extern String ds2;
 extern double gOutputPwr; //результат вычислений PID
@@ -85,6 +86,7 @@ void loop() {
 
       disp_refrash();
       pid_set_tun();
+      timer_handle();
       time_last=time_now;
   }
 

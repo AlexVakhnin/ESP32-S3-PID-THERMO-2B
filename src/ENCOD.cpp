@@ -82,6 +82,11 @@ void encoder_handle() {
     }
 }
 
+//сброс целевой температуры
+void heat_stop_b2(){
+    counter_b2 = 0;
+}
+
 int encoder_value(){
     return counter;
 }
