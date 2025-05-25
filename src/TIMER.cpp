@@ -7,8 +7,8 @@ extern void heat_stop_b2();
 
 bool ind_state = false; //состояние зеленого светодиода
 bool tm_on = false; //состояние таймера вкл./выкл.
-bool ss_old = false; //предыдущее состояние тумблера
-bool ss_old_old = false; //второе предыдущее состояние тумблера (антидребезг..)
+bool ss_old = true; //предыдущее состояние тумблера
+bool ss_old_old = true; //второе предыдущее состояние тумблера (антидребезг..)
 
 volatile int tm_counter = 0; //счетчик таймера отключения комфорки
 
