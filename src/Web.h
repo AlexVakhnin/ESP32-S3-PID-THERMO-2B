@@ -29,3 +29,12 @@ extern void handleLogout(AsyncWebServerRequest *request);
 extern void handleNotFound(AsyncWebServerRequest *request);
 extern bool handleFileRead(AsyncWebServerRequest *request, String path);
 extern bool is_authenticated(AsyncWebServerRequest *request);
+
+//для графиков
+extern int get_kp();
+extern int get_ki();
+extern int get_kd();
+
+extern int get_kp_b2();
+extern int get_ki_b2();
+extern int get_kd_b2();

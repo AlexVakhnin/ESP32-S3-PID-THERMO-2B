@@ -23,6 +23,9 @@
             <span id="curr">0</span>
             <span id="impact">0</span>
             <span id="osmode">0</span>
+            <span id="pkp">0</span>
+            <span id="pki">0</span>
+            <span id="pkd">0</span>
         </p>
 
   </div>
@@ -47,10 +50,16 @@ let xValues = new Array(108); for (var i=0;i<=107;i++){xValues[i]="0.0"}//мет
             var curr = myObj[1]/100; //текущее знач.
             var impact = myObj[2]; //воздействие
             var osmode = myObj[3]; //big error
+            var pkp = myObj[4];
+            var pki = myObj[5];
+            var pkd = myObj[6];
             document.getElementById("targ").innerHTML = targ;
             document.getElementById("curr").innerHTML = curr.toFixed(2);
             document.getElementById("impact").innerHTML = impact;
             document.getElementById("osmode").innerHTML = "["+osmode+"]";
+            document.getElementById("pkp").innerHTML = pkp/100;
+            document.getElementById("pki").innerHTML = pki/100;
+            document.getElementById("pkd").innerHTML = pkd/100;
       }
     };
     xhttp.open("GET", "/jsond1", false);  //synchronous request !!!
@@ -113,10 +122,16 @@ var myChart = new Chart(ctx_live, {
             var curr = myObj[1]/100; //текущее знач.
             var impact = myObj[2]; //воздействие
             var osmode = myObj[3]; //big error
+            var pkp = myObj[4];
+            var pki = myObj[5];
+            var pkd = myObj[6];
             document.getElementById("targ").innerHTML = targ;
             document.getElementById("curr").innerHTML = curr.toFixed(2);
             document.getElementById("impact").innerHTML = (impact/10).toFixed(2);
             document.getElementById("osmode").innerHTML = "["+osmode+"]";
+            document.getElementById("pkp").innerHTML = pkp/100;
+            document.getElementById("pki").innerHTML = pki/100;
+            document.getElementById("pkd").innerHTML = pkd/100;
 
             for (var i=0;i<107;i++){
                myChart.data.datasets[0].data[i] = myChart.data.datasets[0].data[i+1]; /*сдвиг*/

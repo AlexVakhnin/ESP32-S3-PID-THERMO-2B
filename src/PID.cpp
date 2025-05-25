@@ -83,3 +83,12 @@ void pid_setup(){
   ESPPID_B2.SetOutputLimits(0, 1000);
   ESPPID_B2.SetMode(AUTOMATIC);
 }
+
+//для графиков
+int get_kp(){return round(ESPPID.GetKp()*100);};
+int get_ki(){return round(ESPPID.GetKi()*100);};
+int get_kd(){return round(ESPPID.GetKd()*100);};
+
+int get_kp_b2(){return round(ESPPID_B2.GetKp()*100);};
+int get_ki_b2(){return round(ESPPID_B2.GetKi()*100);};
+int get_kd_b2(){return round(ESPPID_B2.GetKd()*100);};

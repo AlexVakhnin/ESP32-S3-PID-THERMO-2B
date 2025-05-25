@@ -195,24 +195,30 @@ server.on("/posts", HTTP_POST, [](AsyncWebServerRequest *request){
     // текущие данные для графика №1
     server.on("/jsond0", HTTP_GET, [](AsyncWebServerRequest *request){
       AsyncResponseStream *response = request->beginResponseStream("application/json");    
-      const int capacity = JSON_OBJECT_SIZE(4);//Количество живых параметров = 4
+      const int capacity = JSON_OBJECT_SIZE(7);//Количество живых параметров = 7
       StaticJsonDocument<capacity> doc;
           doc.add( gTargetTemp ); //цель
           doc.add( currentTemp*100 ); //текущее значение
           doc.add( gOutputPwr ); //воздействие
           doc.add( (int)overShootMode ); //агрессивный
+          doc.add( get_kp() ); //коэффициенты PID
+          doc.add( get_ki() );
+          doc.add( get_kd() );
       serializeJson(doc, *response);
       request->send(response);    
     });
     // текущие данные для графика №2
     server.on("/jsond1", HTTP_GET, [](AsyncWebServerRequest *request){
       AsyncResponseStream *response = request->beginResponseStream("application/json");    
-      const int capacity = JSON_OBJECT_SIZE(4);//Количество живых параметров = 4
+      const int capacity = JSON_OBJECT_SIZE(7);//Количество живых параметров = 7
       StaticJsonDocument<capacity> doc;
           doc.add( gTargetTemp_b2 ); //цель
           doc.add( currentTemp_b2*100 ); //текущее значение
           doc.add( gOutputPwr_b2 ); //воздействие
           doc.add( (int)overShootMode_b2 ); //агрессивный
+          doc.add( get_kp_b2() ); //коэффициенты PID
+          doc.add( get_ki_b2() );
+          doc.add( get_kd_b2() );
       serializeJson(doc, *response);
       request->send(response);    
     });
