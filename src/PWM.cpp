@@ -7,6 +7,7 @@
 #define RELAY_PIN_B2  33
 
 #define HEAT_MAX 400
+#define HEAT_MAX_B2 380
 
 extern unsigned long time_now;
 extern int senserror; //счетчик ошибок термопары
@@ -58,7 +59,7 @@ void _turnHeatElementOnOff(bool state) {
 void _turnHeatElementOnOff_b2(bool state) {
 
     if(senserror_b2!=0) state = 0; //блокировка при аварии датчика !!!
-    if(rawTemp_b2>=HEAT_MAX) overheat_b2=true;//блокировка по высокой температуре !!!
+    if(rawTemp_b2>=HEAT_MAX_B2) overheat_b2=true;//блокировка по высокой температуре !!!
     if(overheat_b2) state = 0;
     if(tempfail_b2) state = 0;
 

@@ -3,6 +3,7 @@
 #include "SPIFFS.h"
 
 #define SW_PIN 8
+#define SW_PIN_B2 2
 
 //External Variables and functions
 
@@ -111,9 +112,10 @@ void apn_stop(){
   if(flag_apn){ //заглушка если APN
     ds2 = "APN IS ON";disp_show();
     pinMode(SW_PIN, INPUT_PULLUP); //инициализируем порт
+    pinMode(SW_PIN_B2, INPUT_PULLUP);
     //delay(300);
     while(1){
-      if (digitalRead(SW_PIN) == LOW) {
+      if (digitalRead(SW_PIN) == LOW or digitalRead(SW_PIN_B2) == LOW) {
         //flag_apn = false;
         WiFi.disconnect();
         WiFi.mode(WIFI_OFF);
