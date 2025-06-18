@@ -8,7 +8,7 @@
 #define DT_PIN_B2 4
 #define SW_PIN_B2 2
 
-#define STEP 5 //шаг энкодера
+#define STEP 5 //шаг энкодера (1,2,5,10)
 
 extern volatile bool tempfail; //флаг для блокировки реле по резкому падению температуры
 extern bool overheat; //флаг для блокировки реле по перегреву
